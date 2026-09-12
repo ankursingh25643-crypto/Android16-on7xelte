@@ -1,0 +1,61 @@
+name: Android 16 Native Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            git-core \
+            curl \
+            python3 \
+            python3-pip \
+            unzip \
+            zip \
+            bc \
+            bison \
+            flex \
+            gperf \
+            build-essential \
+            ccache \
+            libssl-dev \
+            libxml2-utils \
+            xsltproc \
+            rsync
+
+      - name: Install repo
+        run: |
+          mkdir -p $HOME/bin
+          curl https://storage.googleapis.com/git-repo-downloads/repo \
+            > $HOME/bin/repo
+          chmod a+x $HOME/bin/repo
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: Check build environment
+        run: |
+          git --version
+          repo --version
+          python3 --version
+          echo "Cloud Android build environment ready."
+
+      - name: Prepare workspace
+        run: |
+          mkdir -p android-source
+          echo "Target device: SM-G610F / on7xelte"
+          echo "Build type: Native device-specific ROM"
+          echo "GSI: disabled"
+          echo "DSU: disabled"
+
+      - name: Finish
+        run: |
+          echo "Environment preparation completed."
+          echo "Next stage: verified Android 16 source + on7xelte device tree."
