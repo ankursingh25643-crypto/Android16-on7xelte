@@ -1,4 +1,3 @@
-
 name: Android 16 Native Build
 
 on:
@@ -12,30 +11,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install build tools
+      - name: Test runner
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            git curl python3 unzip zip bc \
-            bison flex gperf build-essential \
-            ccache libssl-dev libxml2-utils \
-            xsltproc rsync
-
-      - name: Install repo tool
-        run: |
-          mkdir -p "$HOME/bin"
-          curl -L https://storage.googleapis.com/git-repo-downloads/repo \
-            -o "$HOME/bin/repo"
-          chmod +x "$HOME/bin/repo"
-          echo "$HOME/bin" >> "$GITHUB_PATH"
-
-      - name: Verify environment
-        run: |
-          echo "Target: Samsung Galaxy J7 Prime SM-G610F"
-          echo "Codename: on7xelte"
+          echo "Target: SM-G610F / on7xelte"
           echo "Build type: Native"
           echo "GSI: NO"
           echo "DSU: NO"
-          git --version
-          python3 --version
-          repo --version
+          echo "Runner is working!"
+          
